@@ -1,0 +1,22 @@
+name: Baseline request
+about: Request a new baseline or experimental variant for comparison
+title: "[baseline request] "
+labels: enhancement
+assignees: ''
+
+body:
+  - type: input
+    id: baseline-name
+    attributes:
+      label: Baseline name
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Explain the proposed baseline and rationale
+  - type: input
+    id: resources
+    attributes:
+      label: Resources
+      description: Links to implementations or papers (optional)

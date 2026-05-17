@@ -1,0 +1,22 @@
+name: Reproduction issue
+about: Report problems reproducing published benchmark outputs
+title: "[repro] "
+labels: reproducibility
+assignees: ''
+
+body:
+  - type: input
+    id: command
+    attributes:
+      label: Exact command used
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, and package versions
+  - type: textarea
+    id: divergence
+    attributes:
+      label: How results differ
+      description: Describe differences vs expected outputs

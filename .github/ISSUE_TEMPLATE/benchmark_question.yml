@@ -1,0 +1,18 @@
+name: Benchmark question
+about: Ask about reproducing or interpreting benchmark outputs
+title: "[benchmark question] "
+labels: question
+assignees: ''
+
+body:
+  - type: input
+    id: scenario
+    attributes:
+      label: Scenario
+      description: Describe which benchmark, command, and outputs you are referencing
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Give details about what you want clarified or reproduced

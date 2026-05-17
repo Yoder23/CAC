@@ -1,0 +1,24 @@
+name: Bug report
+about: Create a report to help triage a reproducible bug
+title: "[bug] "
+labels: bug
+assignees: ''
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please include a short description and steps to reproduce.
+  - type: input
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Include exact commands, environment, and expected vs actual behavior
+      placeholder: |
+        e.g. `PYTHONPATH=. python -m benchmarks.decision_risk.run --n 1 --budgets 40`
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / trace
+      description: Paste relevant stack traces or log excerpts

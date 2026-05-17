@@ -1,0 +1,17 @@
+name: Task profile proposal
+about: Propose a new task profile or dataset for the benchmark
+title: "[task profile] "
+labels: proposal
+assignees: ''
+
+body:
+  - type: input
+    id: profile-name
+    attributes:
+      label: Profile name
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Describe task, required slots, candidate pool, and evaluation criteria

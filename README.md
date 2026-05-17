@@ -59,6 +59,37 @@ The core claim:
 
 ---
 
+New here? Start with START_HERE.md.
+
+## How CAC differs from RAG
+
+| RAG | CAC |
+|---|---|
+| Retrieves chunks | Satisfies evidence requirements |
+| Optimizes relevance | Optimizes sufficiency under budget |
+| Stuffs raw text | Chooses representations |
+| Usually cites retrieved docs | Audits admission/exclusion decisions |
+| Often answers from what it found | Reports missing evidence |
+| More context can mean more noise | Context is governed by evidence policy |
+
+![Decision grade vs budget](outputs/decision_risk_v1_4_n20/decision_grade_vs_budget.svg)
+![Distractor rate vs budget](outputs/decision_risk_v1_4_n20/distractor_rate_vs_budget.svg)
+
+## Who this is for
+
+CAC is for builders working on:
+- enterprise AI assistants
+- auditable QA
+- decision support
+- compliance / security / contract workflows
+- post-RAG context engineering
+- LLM evaluation and retrieval benchmarks
+
+CAC is probably overkill for:
+- simple FAQ bots
+- single-document lookup
+- low-stakes retrieval demos
+
 ## What CAC Builds
 
 CAC outputs an **evidence packet**, not a bag of chunks.
