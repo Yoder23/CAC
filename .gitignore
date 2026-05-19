@@ -39,6 +39,7 @@ outputs/*
 !outputs/llm_eval_budget_crunch/
 !outputs/llm_eval_extreme_noise/
 !outputs/llm_eval_metadata_corruption/
+!outputs/llm_eval_perfect_storm/
 
 # Editor and OS noise
 .DS_Store

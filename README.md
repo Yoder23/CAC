@@ -387,6 +387,32 @@ Across all conditions, CAC ranks #1 or #2 on ground-truth lexical safe rate and 
 | B: Distractor flood (d=100) | **57.5%** | 33.75% (schema) | 0.0% |
 | C: Metadata corruption (noise=0.5) | 48.0% | 48.0% (schema, tied) | 5.0% |
 
+### Per-task-type safe rate breakdown
+
+Baseline stress run (d=50, budget=160, n=15 × 4 tasks = 60 answers per method):
+
+| Task | `cac` | `oracle_candidate_rag` | `schema_aware_rag` | `iterative_rag` | `fixed_context_rag` |
+|---|---:|---:|---:|---:|---:|
+| Renewal risk | **80%** | 13% | 47% | 60% | 0% |
+| Security exception | **33%** | 7% | 0% | 0% | 0% |
+| Contract termination | 60% | **93%** | 27% | 7% | 0% |
+| Incident postmortem | **80%** | 80% | 33% | 20% | 0% |
+
+> **`fixed_context_rag` achieves 0% safe rate on all four task types.** CAC leads on three of four tasks; oracle leads only on contract termination (where knowing the gold candidate list is most valuable). The security exception task is the hardest overall — CAC is the *only non-oracle method to achieve any safe rate at all* (33% vs. 0% for schema, iterative, and fixed-context).
+
+### Budget efficiency: safe rate per token
+
+**Efficiency ratio** = `safe_rate ÷ (budget ÷ 160)` — how much safe-rate value each method extracts relative to its token spend. Ratio > 1.0 means the method is more efficient at a tighter budget than at the 160-token baseline.
+
+| Scenario | budget | `cac` | `oracle` | `schema_aware` | `iterative` | `fixed_context` |
+|---|---:|---:|---:|---:|---:|---:|
+| Baseline stress (d=50) | 160 | 0.63 | 0.48 | 0.27 | 0.22 | 0.00 |
+| A: Budget crunch | **80** | **1.40** | 1.10 | 1.00 | 0.60 | 0.07 |
+| B: Distractor flood (d=100) | 160 | 0.57 | 0.36 | 0.34 | 0.30 | 0.00 |
+| C: Metadata corruption | 160 | 0.48 | 0.60 | 0.48 | 0.42 | 0.05 |
+
+> **At budget=80, CAC's efficiency ratio reaches 1.40 — meaning it delivers more safe answers per token at half the context window than it does at full size.** This is the defining characteristic of admission control: greedy RAG fills available space regardless of value; CAC selects by value regardless of space. When space is scarce, the gap widens.
+
 ---
 
 ## No-Gold-Admission Boundary
