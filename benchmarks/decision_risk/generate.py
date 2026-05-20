@@ -13,7 +13,7 @@ def generate_decision_dossiers(n:int=5,distractors:int=12,seed:int=42,task_types
             account=f"{task[:3]}_{i:04d}"; entity=f"{task.replace('_',' ').title()} Entity {i:04d}"; missing_type=MISSING_TYPES[(i+len(task))%len(MISSING_TYPES)] if rng.random()<missing_rate else "none"
             sources=make_task_sources(task,account,entity,missing_type)+make_distractors(account,entity,distractors,rng); apply_noise(sources,rng,metadata_noise)
             present=sorted({slot for s in sources for slot in s.gold_slots}); required=[s.name for s in task_slots(task)]; missing=[s for s in required if s not in present]
-            out.append(AccountDossier(account_id=account,entity=entity,sources=sources,present_gold_slots=present,missing_gold_slots=missing,has_contradiction=True,metadata_mode=f"noise_{metadata_noise}",distractors=distractors,missing_case=bool(missing),missing_case_type=missing_type))
+            has_contra=any(not s.is_distractor and s.gold_positive for s in sources); out.append(AccountDossier(account_id=account,entity=entity,sources=sources,present_gold_slots=present,missing_gold_slots=missing,has_contradiction=has_contra,metadata_mode=f"noise_{metadata_noise}",distractors=distractors,missing_case=bool(missing),missing_case_type=missing_type))
     return out
 def make_task_sources(task,account,entity,missing_type):
     if task=="renewal_risk":

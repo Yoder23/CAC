@@ -115,7 +115,11 @@ def assemble_packet(profile: TaskProfile, valuations: List[CandidateValuation], 
             and not metadata_distractor_signal(v.item)
             and v.item.authority >= 0.55
         )
-        if not new_satisfying_slots and not (trusted_conflict_source and v.contradiction_potential >= 0.45):
+        # Metadata-detected distractors must not fill evidence slots: noise may have injected
+        # task-relevant tags into their metadata.  They are still considered for the trusted-conflict
+        # path so genuine polarity signals are not blocked, but they do not satisfy slot requirements.
+        effective_slot_fill = [] if metadata_distractor_signal(v.item) else new_satisfying_slots
+        if not effective_slot_fill and not (trusted_conflict_source and v.contradiction_potential >= 0.45):
             exclude(packet, v, cost, "redundant or does not satisfy a remaining evidence slot or trusted conflict pair")
             continue
         if used + cost > profile.token_budget:
@@ -124,7 +128,7 @@ def assemble_packet(profile: TaskProfile, valuations: List[CandidateValuation], 
         used += cost
         ev = AdmittedEvidence(item=item, representation=rep, slot_matches=v.slot_matches, token_cost=cost)
         admitted.append(ev)
-        for s in new_satisfying_slots:
+        for s in effective_slot_fill:
             satisfied_slots.add(s)
         packet.audit_trace.append(audit_entry(v, "admitted", cost))
         if rep == Representation.STRUCTURED_FACT:
