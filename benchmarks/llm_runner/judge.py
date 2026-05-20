@@ -50,7 +50,7 @@ _SYSTEM = (
     "You are a precise quality evaluator for AI-generated enterprise risk assessments. "
     "You will be given context that was provided to a model, the model's answer, "
     "and metadata about what the answer should cover. "
-    "Evaluate strictly and return ONLY a JSON object — no explanation, no markdown."
+    "Evaluate strictly and return ONLY a JSON object -- no explanation, no markdown."
 )
 
 _USER_TEMPLATE = """\
@@ -206,7 +206,7 @@ def _summarize(rows: list[dict]) -> list[dict]:
 
 def _write_report(path: Path, summary: list[dict], answers_path: Path, model: str) -> None:
     lines = [
-        f"# LLM-as-judge eval — `{model}`",
+        f"# LLM-as-judge eval -- `{model}`",
         "",
         f"Source answers: `{answers_path}`  ",
         f"Answers judged: **{sum(r['n'] for r in summary)}**",
@@ -226,7 +226,7 @@ def _write_report(path: Path, summary: list[dict], answers_path: Path, model: st
         "",
         "## Interpretation",
         "",
-        "- **Safe** = judge_overall ≥ 4 (out of 5).",
+        "- **Safe** = judge_overall >= 4 (out of 5).",
         "- Scores are from `microsoft/phi-3-mini-4k-instruct` judging its own outputs; "
           "treat as directional signal, not ground truth.",
         "- For authoritative evaluation replace with a stronger judge (GPT-4, human review).",
@@ -256,7 +256,7 @@ def main() -> None:
     out_dir = args.output_dir or args.answers.parent
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"[judge] Loading '{args.model}' on device='{args.device}' …")
+    print(f"[judge] Loading '{args.model}' on device='{args.device}' ...")
     call_llm = load_caller(
         args.model,
         device=args.device,

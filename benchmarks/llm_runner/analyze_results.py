@@ -145,7 +145,7 @@ def per_task_for_run(dirname: str, label: str) -> str:
 def per_task_table() -> str:
     lines = []
     lines.append("## Per-task-type safe rate breakdown\n")
-    lines.append("Each cell shows `safe_rate (n)` for that method × task combination.")
+    lines.append("Each cell shows `safe_rate (n)` for that method x task combination.")
     lines.append("Source: `llm_answer_eval.csv` from the baseline stress run (d=50, budget=160, n=15).\n")
 
     path = ROOT / "llm_eval_stress" / "llm_answer_eval.csv"
@@ -177,7 +177,7 @@ def per_task_table() -> str:
                 sr = safe_rate(task_rows)
                 cells.append(f"{sr:.0%} ({len(task_rows)})")
             else:
-                cells.append("—")
+                cells.append("-")
         lines.append(f"| {TASK_LABELS[task]} | " + " | ".join(cells) + " |")
 
     lines.append("")
@@ -233,7 +233,7 @@ def efficiency_table() -> str:
         for method in METHOD_ORDER:
             sr = sr_by_method.get(method)
             if sr is None:
-                cells.append("—")
+                cells.append("-")
             else:
                 ratio = sr / budget_frac
                 cells.append(f"{ratio:.2f}")

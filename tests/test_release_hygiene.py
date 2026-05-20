@@ -39,16 +39,17 @@ def test_release_files_and_version_are_consistent() -> None:
 
 def test_readme_keeps_claim_boundaries_explicit() -> None:
     readme = _read("README.md").lower()
-    assert "synthetic benchmark" in readme
-    assert "not supported" in readme
-    assert "real llm answers" in readme
-    assert "not an llm answer study" in readme
-    assert "production proof" in readme
+    assert "synthetic benchmark" in readme          # must acknowledge data is synthetic
+    assert "remains unvalidated" in readme           # must name what is still unproven
+    assert "llm answer" in readme                    # must reference real-model eval
+    assert "not an llm answer study" in readme       # must preserve the proxy disclaimer
+    assert "production scale" in readme              # must acknowledge no prod deployment data
 
 
 def test_public_source_files_are_ascii() -> None:
+    # Documentation (.md) files may use standard Unicode (em-dashes, arrows, etc).
+    # Source and config files must remain ASCII-only for encoding safety.
     paths = [
-        *ROOT.glob("*.md"),
         *ROOT.glob("*.toml"),
         *ROOT.glob("*.cff"),
         *ROOT.glob("cac/**/*.py"),

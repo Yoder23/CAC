@@ -169,6 +169,14 @@ def detect_conflicts(packet: EvidencePacket) -> None:
     negative = any(x in text for x in ["overdue", "p1", "escalation", "unresolved", "cannot recommend", "breach", "terminate", "blocked", "gap", "missing", "lost export", "root cause", "dispute", "uncured", "downtime", "failed", "risk"])
     if crm_positive and negative:
         packet.conflicts.append({"issue": "CRM optimism conflicts with operational risk signals", "higher_authority_signal": "billing/support/contract/executive evidence should outweigh subjective CRM status"})
+    # Counterparty dispute conflict: counterparty asserts good standing against established breach evidence.
+    # "We dispute" / "no valid notice" is a positive claim from the counterparty's perspective; when
+    # combined with breach/overdue evidence it constitutes a legally material conflict that must be
+    # surfaced even though neither keyword alone looks like a CRM-vs-operational conflict.
+    counterparty_positive = any(x in text for x in ["we dispute", "no valid notice", "customer counsel", "deny breach", "good standing"])
+    breach_evidence = any(x in text for x in ["overdue", "breach", "uncured", "material breach", "payment default", "notice was sent", "cure notice"])
+    if counterparty_positive and breach_evidence:
+        packet.conflicts.append({"issue": "Counterparty disputes breach or notice validity", "higher_authority_signal": "verify notice was validly delivered per contractual requirements; termination may not be supportable until notice delivery is confirmed or counterparty claim is rebutted"})
 
 
 def detect_uncertainties(profile: TaskProfile, packet: EvidencePacket) -> None:

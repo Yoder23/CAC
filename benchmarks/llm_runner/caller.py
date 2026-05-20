@@ -79,7 +79,7 @@ def load_caller(
             stacklevel=2,
         )
 
-    print(f"[llm_runner] Loading {model_name!r} on device={device!r} …", flush=True)
+    print(f"[llm_runner] Loading {model_name!r} on device={device!r} ...", flush=True)
 
     tokenizer = AutoTokenizer.from_pretrained(
         model_name,
